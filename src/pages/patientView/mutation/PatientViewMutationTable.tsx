@@ -8,6 +8,7 @@ import SampleManager from "../sampleManager";
 import {Mutation} from "shared/api/generated/CBioPortalAPI";
 import AlleleCountColumnFormatter from "shared/components/mutationTable/column/AlleleCountColumnFormatter";
 import AlleleFreqColumnFormatter from "./column/AlleleFreqColumnFormatter";
+import PatientCCFColumnFormatter from "./column/PatientCCFColumnFormatter";
 import TumorColumnFormatter from "./column/TumorColumnFormatter";
 import {isUncalled} from "shared/lib/MutationUtils";
 import TumorAlleleFreqColumnFormatter from "shared/components/mutationTable/column/TumorAlleleFreqColumnFormatter";
@@ -52,7 +53,9 @@ export default class PatientViewMutationTable extends MutationTable<IPatientView
             MutationTableColumnType.FUNCTIONAL_IMPACT,
             MutationTableColumnType.COSMIC,
             MutationTableColumnType.TUMOR_ALLELE_FREQ,
-            MutationTableColumnType.TUMORS
+            MutationTableColumnType.TUMORS,
+            MutationTableColumnType.CLONAL_STATUS,
+            MutationTableColumnType.CCF
         ]
     };
 
@@ -76,6 +79,13 @@ export default class PatientViewMutationTable extends MutationTable<IPatientView
             tooltip:(<span>Variant allele frequency in the tumor sample</span>),
             visible: AlleleFreqColumnFormatter.isVisible(this.props.sampleManager,
                 this.props.dataStore ? this.props.dataStore.allData : this.props.data)
+        };
+
+        this._columns[MutationTableColumnType.CCF] = {
+            name: "Cancer Cell Fraction",
+            render: (d:Mutation[])=>PatientCCFColumnFormatter.renderFunction(d, this.props.sampleManager),
+            sortBy:(d:Mutation[])=>PatientCCFColumnFormatter.getSortValue(d, this.props.sampleManager),
+            tooltip:(<span>CCF in tumor</span>)
         };
 
         this._columns[MutationTableColumnType.TUMORS] = {
@@ -132,6 +142,8 @@ export default class PatientViewMutationTable extends MutationTable<IPatientView
         this._columns[MutationTableColumnType.MRNA_EXPR].order = 182;
         this._columns[MutationTableColumnType.COHORT].order = 183;
         this._columns[MutationTableColumnType.COSMIC].order = 184;
+        this._columns[MutationTableColumnType.CLONAL_STATUS].order = 190;
+        this._columns[MutationTableColumnType.CCF].order = 196;
 
         // exclusions
         this._columns[MutationTableColumnType.MRNA_EXPR].shouldExclude = ()=>{

@@ -283,7 +283,7 @@ export type VariantCountIdentifier = {
  */
 export default class CBioPortalAPIInternal {
 
-    private domain: string = "";
+    private domain: string = "http://localhost:8080/cbioportal/api";
     private errorHandlers: CallbackHandler[] = [];
 
     constructor(domain ? : string) {
