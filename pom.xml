@@ -3,9 +3,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.cbioportal</groupId>
+    <groupId>com.github.franciscrickinstitute</groupId>
     <artifactId>frontend-cbioportal</artifactId>
-    <version>0.3.0</version>
+    <version>257e99b87fc3f5d3a3f71c3641a54fa2c58b37f7</version>
     <packaging>jar</packaging>
 
     <build>
