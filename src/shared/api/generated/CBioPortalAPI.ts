@@ -563,7 +563,7 @@ export type TypeOfCancer = {
  */
 export default class CBioPortalAPI {
 
-    private domain: string = "http://localhost:8080/cbioportal/api";
+    private domain: string = "";
     private errorHandlers: CallbackHandler[] = [];
 
     constructor(domain ? : string) {
