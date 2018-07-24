@@ -64,6 +64,10 @@
       "description": " "
     },
     {
+      "name": "Phylogenetic Trees",
+      "description": " "
+    },
+    {
       "name": "Sample Lists",
       "description": " "
     },
@@ -1016,7 +1020,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/NumericGeneMolecularData"
+                "$ref": "#/definitions/GeneMolecularData"
               }
             }
           }
@@ -1483,7 +1487,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/NumericGeneMolecularData"
+                "$ref": "#/definitions/GeneMolecularData"
               }
             }
           }
@@ -1541,7 +1545,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/NumericGeneMolecularData"
+                "$ref": "#/definitions/GeneMolecularData"
               }
             }
           }
@@ -3369,6 +3373,83 @@
         }
       }
     },
+    "/studies/{studyId}/patients/{patientId}/tree-structure": {
+      "get": {
+        "tags": [
+          "Phylogenetic Trees"
+        ],
+        "summary": "Get phylogenetic tree for a patient in a study",
+        "operationId": "getPhylogeneticTreesInPatientInStudyUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "studyId",
+            "in": "path",
+            "description": "Study ID e.g. acc_tcga",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "patientId",
+            "in": "path",
+            "description": "Patient ID e.g. TCGA-OR-A5J2",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "projection",
+            "in": "query",
+            "description": "Level of detail of the response",
+            "required": false,
+            "type": "string",
+            "default": "SUMMARY",
+            "enum": [
+              "ID",
+              "SUMMARY",
+              "DETAILED",
+              "META"
+            ]
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size of the result list",
+            "required": false,
+            "type": "integer",
+            "default": 20000,
+            "maximum": 20000,
+            "exclusiveMaximum": false,
+            "minimum": 1,
+            "exclusiveMinimum": false,
+            "format": "int32"
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number of the result list",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PhylogeneticTree"
+              }
+            }
+          }
+        }
+      }
+    },
     "/studies/{studyId}/sample-lists": {
       "get": {
         "tags": [
@@ -3799,6 +3880,60 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/CopyNumberSeg"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tree-structure/fetch": {
+      "post": {
+        "tags": [
+          "Phylogenetic Trees"
+        ],
+        "summary": "Fetch phylogenetic tree by patient ID",
+        "operationId": "fetchPhylogeneticTreesUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "patientIdentifiers",
+            "description": "List of patient identifiers",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PatientIdentifier"
+              }
+            }
+          },
+          {
+            "name": "projection",
+            "in": "query",
+            "description": "Level of detail of the response",
+            "required": false,
+            "type": "string",
+            "default": "SUMMARY",
+            "enum": [
+              "ID",
+              "SUMMARY",
+              "DETAILED",
+              "META"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PhylogeneticTree"
               }
             }
           }
@@ -4277,6 +4412,48 @@
       },
       "title": "Gene"
     },
+    "GeneMolecularData": {
+      "type": "object",
+      "required": [
+        "entrezGeneId",
+        "molecularProfileId",
+        "patientId",
+        "sampleId",
+        "studyId",
+        "value"
+      ],
+      "properties": {
+        "entrezGeneId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "gene": {
+          "$ref": "#/definitions/Gene"
+        },
+        "molecularProfileId": {
+          "type": "string"
+        },
+        "patientId": {
+          "type": "string"
+        },
+        "sampleId": {
+          "type": "string"
+        },
+        "studyId": {
+          "type": "string"
+        },
+        "uniquePatientKey": {
+          "type": "string"
+        },
+        "uniqueSampleKey": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": "GeneMolecularData"
+    },
     "GenePanel": {
       "type": "object",
       "required": [
@@ -4515,7 +4692,13 @@
         "aminoAcidChange": {
           "type": "string"
         },
+        "ccfcluster": {
+          "type": "string"
+        },
         "center": {
+          "type": "string"
+        },
+        "clonalStatus": {
           "type": "string"
         },
         "driverFilter": {
@@ -4561,6 +4744,10 @@
         },
         "molecularProfileId": {
           "type": "string"
+        },
+        "mutCCF": {
+          "type": "number",
+          "format": "float"
         },
         "mutationStatus": {
           "type": "string"
@@ -4767,48 +4954,6 @@
       },
       "title": "MutationPositionIdentifier"
     },
-    "NumericGeneMolecularData": {
-      "type": "object",
-      "required": [
-        "entrezGeneId",
-        "molecularProfileId",
-        "patientId",
-        "sampleId",
-        "studyId",
-        "value"
-      ],
-      "properties": {
-        "entrezGeneId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "gene": {
-          "$ref": "#/definitions/Gene"
-        },
-        "molecularProfileId": {
-          "type": "string"
-        },
-        "patientId": {
-          "type": "string"
-        },
-        "sampleId": {
-          "type": "string"
-        },
-        "studyId": {
-          "type": "string"
-        },
-        "uniquePatientKey": {
-          "type": "string"
-        },
-        "uniqueSampleKey": {
-          "type": "string"
-        },
-        "value": {
-          "type": "number"
-        }
-      },
-      "title": "NumericGeneMolecularData"
-    },
     "Patient": {
       "type": "object",
       "required": [
@@ -4860,6 +5005,36 @@
         }
       },
       "title": "PatientIdentifier"
+    },
+    "PhylogeneticTree": {
+      "type": "object",
+      "properties": {
+        "ancestorClone": {
+          "type": "string"
+        },
+        "cancerStudyId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cancerStudyIdentifier": {
+          "type": "string"
+        },
+        "descendantClone": {
+          "type": "string"
+        },
+        "internalId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "patientId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "patientStableId": {
+          "type": "string"
+        }
+      },
+      "title": "PhylogeneticTree"
     },
     "Sample": {
       "type": "object",

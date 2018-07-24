@@ -213,6 +213,26 @@ export type Gene = {
         'type': string
 
 };
+export type GeneMolecularData = {
+    'entrezGeneId': number
+
+        'gene': Gene
+
+        'molecularProfileId': string
+
+        'patientId': string
+
+        'sampleId': string
+
+        'studyId': string
+
+        'uniquePatientKey': string
+
+        'uniqueSampleKey': string
+
+        'value': string
+
+};
 export type GenePanel = {
     'description': string
 
@@ -298,7 +318,11 @@ export type MolecularProfileFilter = {
 export type Mutation = {
     'aminoAcidChange': string
 
+        'ccfcluster': string
+
         'center': string
+
+        'clonalStatus': string
 
         'driverFilter': string
 
@@ -327,6 +351,8 @@ export type Mutation = {
         'linkXvar': string
 
         'molecularProfileId': string
+
+        'mutCCF': number
 
         'mutationStatus': string
 
@@ -421,26 +447,6 @@ export type MutationPositionIdentifier = {
         'proteinPosStart': number
 
 };
-export type NumericGeneMolecularData = {
-    'entrezGeneId': number
-
-        'gene': Gene
-
-        'molecularProfileId': string
-
-        'patientId': string
-
-        'sampleId': string
-
-        'studyId': string
-
-        'uniquePatientKey': string
-
-        'uniqueSampleKey': string
-
-        'value': number
-
-};
 export type Patient = {
     'patientId': string
 
@@ -461,6 +467,22 @@ export type PatientIdentifier = {
     'patientId': string
 
         'studyId': string
+
+};
+export type PhylogeneticTree = {
+    'ancestorClone': string
+
+        'cancerStudyId': number
+
+        'cancerStudyIdentifier': string
+
+        'descendantClone': string
+
+        'internalId': number
+
+        'patientId': number
+
+        'patientStableId': string
 
 };
 export type Sample = {
@@ -1858,7 +1880,7 @@ export default class CBioPortalAPI {
             'projection' ? : "ID" | "SUMMARY" | "DETAILED" | "META",
             $queryParameters ? : any,
             $domain ? : string
-        }): Promise < Array < NumericGeneMolecularData >
+        }): Promise < Array < GeneMolecularData >
         > {
             const domain = parameters.$domain ? parameters.$domain : this.domain;
             const errorHandlers = this.errorHandlers;
@@ -2539,7 +2561,7 @@ export default class CBioPortalAPI {
             'projection' ? : "ID" | "SUMMARY" | "DETAILED" | "META",
             $queryParameters ? : any,
             $domain ? : string
-        }): Promise < Array < NumericGeneMolecularData >
+        }): Promise < Array < GeneMolecularData >
         > {
             const domain = parameters.$domain ? parameters.$domain : this.domain;
             const errorHandlers = this.errorHandlers;
@@ -2634,7 +2656,7 @@ export default class CBioPortalAPI {
             'projection' ? : "ID" | "SUMMARY" | "DETAILED" | "META",
             $queryParameters ? : any,
             $domain ? : string
-        }): Promise < Array < NumericGeneMolecularData >
+        }): Promise < Array < GeneMolecularData >
         > {
             const domain = parameters.$domain ? parameters.$domain : this.domain;
             const errorHandlers = this.errorHandlers;
@@ -5107,6 +5129,113 @@ export default class CBioPortalAPI {
             });
         };
 
+    getPhylogeneticTreesInPatientInStudyUsingGETURL(parameters: {
+        'studyId': string,
+        'patientId': string,
+        'projection' ? : "ID" | "SUMMARY" | "DETAILED" | "META",
+        'pageSize' ? : number,
+        'pageNumber' ? : number,
+        $queryParameters ? : any
+    }): string {
+        let queryParameters: any = {};
+        let path = '/studies/{studyId}/patients/{patientId}/tree-structure';
+
+        path = path.replace('{studyId}', parameters['studyId'] + '');
+
+        path = path.replace('{patientId}', parameters['patientId'] + '');
+        if (parameters['projection'] !== undefined) {
+            queryParameters['projection'] = parameters['projection'];
+        }
+
+        if (parameters['pageSize'] !== undefined) {
+            queryParameters['pageSize'] = parameters['pageSize'];
+        }
+
+        if (parameters['pageNumber'] !== undefined) {
+            queryParameters['pageNumber'] = parameters['pageNumber'];
+        }
+
+        if (parameters.$queryParameters) {
+            Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+                var parameter = parameters.$queryParameters[parameterName];
+                queryParameters[parameterName] = parameter;
+            });
+        }
+        let keys = Object.keys(queryParameters);
+        return this.domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '');
+    };
+
+    /**
+     * Get phylogenetic tree for a patient in a study
+     * @method
+     * @name CBioPortalAPI#getPhylogeneticTreesInPatientInStudyUsingGET
+     * @param {string} studyId - Study ID e.g. acc_tcga
+     * @param {string} patientId - Patient ID e.g. TCGA-OR-A5J2
+     * @param {string} projection - Level of detail of the response
+     * @param {integer} pageSize - Page size of the result list
+     * @param {integer} pageNumber - Page number of the result list
+     */
+    getPhylogeneticTreesInPatientInStudyUsingGET(parameters: {
+            'studyId': string,
+            'patientId': string,
+            'projection' ? : "ID" | "SUMMARY" | "DETAILED" | "META",
+            'pageSize' ? : number,
+            'pageNumber' ? : number,
+            $queryParameters ? : any,
+            $domain ? : string
+        }): Promise < Array < PhylogeneticTree >
+        > {
+            const domain = parameters.$domain ? parameters.$domain : this.domain;
+            const errorHandlers = this.errorHandlers;
+            const request = this.request;
+            let path = '/studies/{studyId}/patients/{patientId}/tree-structure';
+            let body: any;
+            let queryParameters: any = {};
+            let headers: any = {};
+            let form: any = {};
+            return new Promise(function(resolve, reject) {
+                headers['Accept'] = 'application/json';
+
+                path = path.replace('{studyId}', parameters['studyId'] + '');
+
+                if (parameters['studyId'] === undefined) {
+                    reject(new Error('Missing required  parameter: studyId'));
+                    return;
+                }
+
+                path = path.replace('{patientId}', parameters['patientId'] + '');
+
+                if (parameters['patientId'] === undefined) {
+                    reject(new Error('Missing required  parameter: patientId'));
+                    return;
+                }
+
+                if (parameters['projection'] !== undefined) {
+                    queryParameters['projection'] = parameters['projection'];
+                }
+
+                if (parameters['pageSize'] !== undefined) {
+                    queryParameters['pageSize'] = parameters['pageSize'];
+                }
+
+                if (parameters['pageNumber'] !== undefined) {
+                    queryParameters['pageNumber'] = parameters['pageNumber'];
+                }
+
+                if (parameters.$queryParameters) {
+                    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+                        var parameter = parameters.$queryParameters[parameterName];
+                        queryParameters[parameterName] = parameter;
+                    });
+                }
+
+                request('GET', domain + path, body, headers, queryParameters, form, reject, resolve, errorHandlers);
+
+            }).then(function(response: request.Response) {
+                return response.body;
+            });
+        };
+
     getAllSampleListsInStudyUsingGETURL(parameters: {
         'studyId': string,
         'projection' ? : "ID" | "SUMMARY" | "DETAILED" | "META",
@@ -5678,6 +5807,81 @@ export default class CBioPortalAPI {
                 }
 
                 request('GET', domain + path, body, headers, queryParameters, form, reject, resolve, errorHandlers);
+
+            }).then(function(response: request.Response) {
+                return response.body;
+            });
+        };
+
+    fetchPhylogeneticTreesUsingPOSTURL(parameters: {
+        'patientIdentifiers': Array < PatientIdentifier > ,
+        'projection' ? : "ID" | "SUMMARY" | "DETAILED" | "META",
+        $queryParameters ? : any
+    }): string {
+        let queryParameters: any = {};
+        let path = '/tree-structure/fetch';
+
+        if (parameters['projection'] !== undefined) {
+            queryParameters['projection'] = parameters['projection'];
+        }
+
+        if (parameters.$queryParameters) {
+            Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+                var parameter = parameters.$queryParameters[parameterName];
+                queryParameters[parameterName] = parameter;
+            });
+        }
+        let keys = Object.keys(queryParameters);
+        return this.domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '');
+    };
+
+    /**
+     * Fetch phylogenetic tree by patient ID
+     * @method
+     * @name CBioPortalAPI#fetchPhylogeneticTreesUsingPOST
+     * @param {} patientIdentifiers - List of patient identifiers
+     * @param {string} projection - Level of detail of the response
+     */
+    fetchPhylogeneticTreesUsingPOST(parameters: {
+            'patientIdentifiers': Array < PatientIdentifier > ,
+            'projection' ? : "ID" | "SUMMARY" | "DETAILED" | "META",
+            $queryParameters ? : any,
+            $domain ? : string
+        }): Promise < Array < PhylogeneticTree >
+        > {
+            const domain = parameters.$domain ? parameters.$domain : this.domain;
+            const errorHandlers = this.errorHandlers;
+            const request = this.request;
+            let path = '/tree-structure/fetch';
+            let body: any;
+            let queryParameters: any = {};
+            let headers: any = {};
+            let form: any = {};
+            return new Promise(function(resolve, reject) {
+                headers['Accept'] = 'application/json';
+                headers['Content-Type'] = 'application/json';
+
+                if (parameters['patientIdentifiers'] !== undefined) {
+                    body = parameters['patientIdentifiers'];
+                }
+
+                if (parameters['patientIdentifiers'] === undefined) {
+                    reject(new Error('Missing required  parameter: patientIdentifiers'));
+                    return;
+                }
+
+                if (parameters['projection'] !== undefined) {
+                    queryParameters['projection'] = parameters['projection'];
+                }
+
+                if (parameters.$queryParameters) {
+                    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+                        var parameter = parameters.$queryParameters[parameterName];
+                        queryParameters[parameterName] = parameter;
+                    });
+                }
+
+                request('POST', domain + path, body, headers, queryParameters, form, reject, resolve, errorHandlers);
 
             }).then(function(response: request.Response) {
                 return response.body;
