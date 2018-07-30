@@ -133,8 +133,8 @@ export function computeGenePanelInformation(
             }
         }
 
-        sampleSequencingInfo.wholeExomeSequenced = gpData.wholeExomeSequenced || sampleSequencingInfo.wholeExomeSequenced;
-        patientSequencingInfo.wholeExomeSequenced = gpData.wholeExomeSequenced || patientSequencingInfo.wholeExomeSequenced;
+        sampleSequencingInfo.wholeExomeSequenced = sampleSequencingInfo.wholeExomeSequenced;
+        patientSequencingInfo.wholeExomeSequenced = patientSequencingInfo.wholeExomeSequenced;
     }
     return {
         samples: sampleInfo,
