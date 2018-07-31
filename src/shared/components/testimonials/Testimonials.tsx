@@ -23,12 +23,8 @@ export class TestimonialStore {
         this.testimonialIndex = 0;
         this.testimonials = [
             {
-                cite: 'Postdoctoral Fellow, Oregon Health & Science University',
-                quote: `Whenever bench scientists ask me how they can look at TCGA data, I've never
-                        had a good answer for them. Now I do. The cBio Portal meets a critical need--it is the
-                        interface that the cancer research community needs to access the wealth of TCGA. Even as a
-                        computational biologist, I use it to follow-up on genes of interest. It makes querying
-                        the data much less painful.`
+                cite: 'Paul Nurse, Director of Francis Crick Institute',
+                quote: `Gareth and Rachel definitely deserve substantial raises.`
             },
             {
                 cite: `Postdoctoral Fellow, Johns Hopkins University School of Medicine,
