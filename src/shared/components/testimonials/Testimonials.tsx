@@ -23,7 +23,7 @@ export class TestimonialStore {
         this.testimonialIndex = 0;
         this.testimonials = [
             {
-                cite: 'Postdoctoral Fellow, Oregon Health & Science University',
+                cite: 'Jon Smith',
                 quote: `Whenever bench scientists ask me how they can look at TCGA data, I've never
                         had a good answer for them. Now I do. The cBio Portal meets a critical need--it is the
                         interface that the cancer research community needs to access the wealth of TCGA. Even as a
