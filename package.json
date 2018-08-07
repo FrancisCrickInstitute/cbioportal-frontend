@@ -4,7 +4,7 @@
   "scripts": {
     "start": "./scripts/env_vars.sh && eval \"$(./scripts/env_vars.sh)\" && cross-env NODE_ENV=development webpack-dev-server",
     "clean": "rimraf dist tsDist common-dist",
-    "build": "npm run clean && npm run buildDLL:prod && cross-env NODE_ENV=production webpack --progress --colors",
+    "build": "npm run clean && npm run buildDLL:dev && cross-env NODE_ENV=development webpack --progress --colors",
     "buildDLL:prod": "npm run clean && cross-env NODE_ENV=production webpack --config vendor-bundles.webpack.config.js",
     "buildDLL:dev": "npm run clean && cross-env NODE_ENV=development webpack --config vendor-bundles.webpack.config.js",
     "build:size": "npm run clean && npm run buildDLL:prod && cross-env NODE_ENV=production webpack --json > stats.json",
