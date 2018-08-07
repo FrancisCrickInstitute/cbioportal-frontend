@@ -18,27 +18,29 @@ export default class ClonalityColumnFormatter
 {
     public static get MAIN_MUTATION_CLONAL_MAP():{[key:string]: IClonalityFormat} {
         return {
-            clonal: {label: "Clonal",
+            C: {label: "Clonal",
                 longName: "Clonal Mutation",
                 className: "clonal-mutation",
                 mainType: "clonal",
                 priority: 1},
-            subclonal: {label: "Subclonal",
+            S: {label: "Subclonal",
                 longName: "Subclonal Mutation",
                 className: "subclonal-mutation",
                 mainType: "subclonal",
                 priority: 2},
-            unknown: {
+            NA: {
                 label: "Unknown",
                 longName: "Unknown status",
                 className: "unknown-status",
                 mainType: "unknown",
-                priority: 3},
-            na: {label: "NA",
-                longName: "NA-tmp",
-                className: "na",
-                mainType: "na",
-                priority: 4},
+                priority: 3}
+            
+//             ,
+//             na: {label: "NA",
+//                 longName: "NA-tmp",
+//                 className: "na",
+//                 mainType: "na",
+//                 priority: 4},
             
         };
     }
@@ -86,7 +88,7 @@ export default class ClonalityColumnFormatter
         }
         // for unmapped values, use the "other" style
         else {
-            return ClonalityColumnFormatter.MAIN_MUTATION_CLONAL_MAP["na"].className;
+            return ClonalityColumnFormatter.MAIN_MUTATION_CLONAL_MAP["NA"].className;
         }
     }
 
