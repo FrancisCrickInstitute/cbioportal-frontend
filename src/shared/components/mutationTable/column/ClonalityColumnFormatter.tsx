@@ -86,7 +86,7 @@ export default class ClonalityColumnFormatter
         }
         // for unmapped values, use the "other" style
         else {
-            return ClonalityColumnFormatter.MAIN_MUTATION_CLONAL_MAP["other"].className;
+            return ClonalityColumnFormatter.MAIN_MUTATION_CLONAL_MAP["na"].className;
         }
     }
 
