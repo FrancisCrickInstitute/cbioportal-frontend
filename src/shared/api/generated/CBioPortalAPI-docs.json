@@ -4480,8 +4480,8 @@
       "required": [
         "molecularProfileId",
         "patientId",
-        "profiled",
         "sampleId",
+        "wholeExomeSequenced",
         "studyId"
       ],
       "properties": {
@@ -4494,9 +4494,6 @@
         "patientId": {
           "type": "string"
         },
-        "profiled": {
-          "type": "boolean"
-        },
         "sampleId": {
           "type": "string"
         },
@@ -4508,6 +4505,9 @@
         },
         "uniqueSampleKey": {
           "type": "string"
+        },
+        "wholeExomeSequenced": {
+          "type": "boolean"
         }
       },
       "title": "GenePanelData"
