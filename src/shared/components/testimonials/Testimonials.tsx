@@ -27,8 +27,10 @@ export class TestimonialStore {
                 quote: `Gareth and Rachel definitely deserve substantial raises.`
             },
             {
-                cite: `Swanton wet-lab scientists`,
-                quote: `Wow, we don't even need bioinformaticians anymore!`
+                cite: `Postdoctoral Fellow, Johns Hopkins University School of Medicine,
+                       Dept Radiation Oncology and Molecular Radiation Sciences`,
+                quote: `Thank you for your incredible resource that has helped greatly in accessing the TCGA
+                        genomics data.`
             },
             {
                 cite: 'Sr. Research Associate at Knight Cancer Institute/OHSU',
