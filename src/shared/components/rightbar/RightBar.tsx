@@ -74,14 +74,14 @@ export default class RightBar extends React.Component<IRightBarProps, IRightBarS
                         <Timeline
                             dataSource={{
                                 sourceType: 'profile',
-                                screenName: 'cbioportal'
+                                screenName: 'swantonlab'
                             }}
                             options={{
-                                username: 'cbioportal',
+                                username: 'swantonlab',
                                 height: '200',
                                 chrome: 'noheader%20nofooter',
                             }}
-                            onLoad={() => this.setState({twitterLoading:true})}
+                            onLoad={() => this.setState({twitterLoading:false})}
                         />
                     </div>
                     <div>
