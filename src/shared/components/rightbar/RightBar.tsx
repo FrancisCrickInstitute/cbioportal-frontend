@@ -57,7 +57,7 @@ export default class RightBar extends React.Component<IRightBarProps, IRightBarS
         if (AppConfig.skinRightNavWhatsNewBlurb) {
             return (
                 <div className="rightBarSection">
-                    <h3>Follow Us</h3>
+                    <h3>What's New</h3>
                     <div dangerouslySetInnerHTML={{__html:AppConfig.skinRightNavWhatsNewBlurb}}></div>;
                 </div>
             );
@@ -67,7 +67,7 @@ export default class RightBar extends React.Component<IRightBarProps, IRightBarS
                     <h3 style={{borderBottom:0}}>
                         What's New
                         <a href="http://www.twitter.com/cbioportal" className="pull-right">
-                            @swantonlab <i className="fa fa-twitter" aria-hidden="true"></i>
+                            @cbioportal <i className="fa fa-twitter" aria-hidden="true"></i>
                         </a>
                     </h3>
                     <div style={{marginTop:3}}>
@@ -81,7 +81,7 @@ export default class RightBar extends React.Component<IRightBarProps, IRightBarS
                                 height: '200',
                                 chrome: 'noheader%20nofooter',
                             }}
-                            onLoad={() => this.setState({twitterLoading:true})}
+                            onLoad={() => this.setState({twitterLoading:false})}
                         />
                     </div>
                     <div>
