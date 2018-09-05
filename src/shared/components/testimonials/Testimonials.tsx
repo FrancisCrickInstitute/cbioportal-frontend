@@ -27,46 +27,19 @@ export class TestimonialStore {
                 quote: `Gareth and Rachel definitely deserve substantial raises.`
             },
             {
-                cite: `Swanton wet-lab scientists`,
+                cite: 'Swanton wet-lab scientists',
                 quote: `Wow, we don't even need bioinformaticians anymore!`
             },
             {
-                cite: 'Sr. Research Associate at Knight Cancer Institute/OHSU',
-                quote: `As a bench biologist with primary aim of determining gene aberrations in GBM, I found
-                        your site absolutely fantastic! Thank you! I have to reiterate how awesome and user-friendly
-                        your group has made this site - finally accomplishing the goal of having data easily accessible
-                        and meaningful.`
+                cite: 'cBioPortal NYC Lead',
+                quote: `Gareth and Rachel have demonstrated remarkable perseverance in the face 
+			of their own extreme ignorance. Within just a couple of weeks they were 
+			able to create a button`
             },
             {
-                cite: 'Research Fellow at Massachusetts General Hospital',
-                quote: `I would like to congratulate you and the team of the cBio portal.
-                        It's just an amazing tool to work with, and we at Mass General really appreciate it.`
-            },
-            {
-                cite: 'Sr. Software Engineer, Institute for Systems Biology',
-                quote: `I have been enjoying the ease with which TCGA data can be extracted in R using your CGDS package.
-                        Very nice work!`
-            },
-            {
-                cite: 'Research Fellow, Memorial Sloan-Kettering Cancer Center',
-                quote: `Thank you for generating such an excellent software. It is very useful for our research.`
-            },
-            {
-                cite: 'Scientist, Discovery Bioinformatics, Biotechnology Company',
-                quote: `Thank you very much for providing and maintaining this great resource.`
-            },
-            {
-                cite: 'Postdoctoral Fellow, Harvard Medical School, Children\'s Hospital Boston',
-                quote: `I want to thank you for the nice, useful and user-friendly interface you have generated
-                        and shared with the community.`
-            },
-            {
-                cite: 'Associate Professor, University of Virginia',
-                quote: `This portal is truly the greatest thing since sliced bread. I am making discoveries with it
-                        not only in glioblastoma, my primary focus, but in other cancers as well -- it's all so easy
-                        with this fantastic tool. And I am enjoying showing it to my colleagues, whose jaws also drop.
-                        Thank you a thousand times over for this beautiful public resource. I am looking forward to
-                        citing this soon in an upcoming paper...`
+                cite: 'Head of Recruitment, Astra Zeneca',
+                quote: `With this project Rachel has been able to demonstrate her 
+			vast set of transferable skills. She’s a keeper!`
             },
         ];
         setInterval(() => this.incrementIndex(), 15000);
