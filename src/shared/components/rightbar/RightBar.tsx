@@ -57,7 +57,7 @@ export default class RightBar extends React.Component<IRightBarProps, IRightBarS
         if (AppConfig.skinRightNavWhatsNewBlurb) {
             return (
                 <div className="rightBarSection">
-                    <h3>What's New</h3>
+                    <h3>Follow Us</h3>
                     <div dangerouslySetInnerHTML={{__html:AppConfig.skinRightNavWhatsNewBlurb}}></div>;
                 </div>
             );
@@ -66,8 +66,8 @@ export default class RightBar extends React.Component<IRightBarProps, IRightBarS
                 <div className="rightBarSection" style={{paddingBottom:20}}>
                     <h3 style={{borderBottom:0}}>
                         What's New
-                        <a href="http://www.twitter.com/cbioportal" className="pull-right">
-                            @cbioportal <i className="fa fa-twitter" aria-hidden="true"></i>
+                        <a href="http://www.twitter.com/swantonlab" className="pull-right">
+                            @swantonlab <i className="fa fa-twitter" aria-hidden="true"></i>
                         </a>
                     </h3>
                     <div style={{marginTop:3}}>
@@ -81,7 +81,7 @@ export default class RightBar extends React.Component<IRightBarProps, IRightBarS
                                 height: '200',
                                 chrome: 'noheader%20nofooter',
                             }}
-                            onLoad={() => this.setState({twitterLoading:false})}
+                            onLoad={() => this.setState({twitterLoading:true})}
                         />
                     </div>
                     <div>
@@ -89,8 +89,6 @@ export default class RightBar extends React.Component<IRightBarProps, IRightBarS
                              (<ThreeBounce className="center-block text-center" />) ||
                              (
                                 <div style={{paddingTop:5}}>
-                                    <p style={{textAlign:'center'}}>Sign up for low-volume email news alerts</p>
-                                    <a target="_blank" className="btn btn-default btn-sm" href="http://groups.google.com/group/cbioportal-news/boxsubscribe" style={{width: "100%"}}>Subscribe</a>
                                  </div>
                              )
                         }
