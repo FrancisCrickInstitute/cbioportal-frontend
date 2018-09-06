@@ -81,7 +81,7 @@ export default class RightBar extends React.Component<IRightBarProps, IRightBarS
                                 height: '200',
                                 chrome: 'noheader%20nofooter',
                             }}
-                            onLoad={() => this.setState({twitterLoading:false})}
+                            onLoad={() => this.setState({twitterLoading:true})}
                         />
                     </div>
                     <div>

@@ -354,7 +354,7 @@ if (isDev) {
 
 }
 
-if (isDev || isTest) {
+if (isTest) {
 
     config.devtool = 'source-map';
 
