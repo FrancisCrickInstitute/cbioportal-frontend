@@ -2,7 +2,7 @@
     "name": "cbioportal-frontend",
     "description": "React Frontend of cBioPortal",
     "repository": "https://github.com/cbioportal/cbioportal-frontend",
-    "logo": "http://www.cbioportal.org/images/cbioportal_logo.png",
+    "logo": "http://www.cbioportal.org/images/tracerx_logo.png",
     "keywords": ["react", "redux", "cancer", "genomics"],
     "buildpacks": [
         {
