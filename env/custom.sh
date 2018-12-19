@@ -1,2 +1,4 @@
 # set e.g.
-# export CBIOPORTAL_URL="http://localhost:8080"
+export BRANCH_ENV="master"
+export CBIOPORTAL_URL="http://galapagos-tracerx.thecrick.test/galapagos/"
+export NODE_ENV="development"
