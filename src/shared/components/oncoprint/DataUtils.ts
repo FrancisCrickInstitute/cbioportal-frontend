@@ -192,7 +192,7 @@ export function makeGeneticTrackData(
             newDatum.sample = sample.sampleId;
             newDatum.study_id = sample.studyId;
             newDatum.uid = sample.uniqueSampleKey;
-            // newDatum.clonality = "sample clonality";
+            newDatum.clonality = "sample clonality";
 
             const sampleSequencingInfo = genePanelInformation.samples[sample.uniqueSampleKey];
             if (!sampleSequencingInfo.wholeExomeSequenced && !sampleSequencingInfo.sequencedGenes.hasOwnProperty(hugoGeneSymbol)) {
@@ -218,7 +218,7 @@ export function makeGeneticTrackData(
             newDatum.patient = patient.patientId;
             newDatum.study_id = patient.studyId;
             newDatum.uid = patient.uniquePatientKey;
-            // newDatum.clonality = "patient clonality";
+            newDatum.clonality = "patient clonality";
 
             const patientSequencingInfo = genePanelInformation.patients[patient.uniquePatientKey];
             if (!patientSequencingInfo.wholeExomeSequenced && !patientSequencingInfo.sequencedGenes.hasOwnProperty(hugoGeneSymbol)) {
