@@ -260,14 +260,14 @@ export function makeGeneticTrackTooltip(
             caseIdElt = "";
         }
         ret.append(caseIdElt);
-        ret.append(addClonality);
+        ret.append(addClonality(d.clonality));
         return ret;
     };
 
     //Add clonality
-    function addClonality() {
+    function addClonality(clonality : string) {
         var clon = $('<p>');
-        clon.append('<b>Clonality: </b>');
+        clon.append('<b>Clonality: </b>'+clonality);
         return clon;
     };
 
