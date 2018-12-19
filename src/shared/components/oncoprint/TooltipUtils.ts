@@ -112,7 +112,7 @@ export function makeGeneticTrackTooltip(
             var ret = $('<span>');
             ret.append('<b>'+d.amino_acid_change+'</b>');
             if (d.cancer_hotspots_hotspot) {
-                ret.append('<span>TEST<span/><img src="images/cancer-hotspots.svg" title="Hotspot" style="height:11px; width:11px; margin-left:3px"/>');
+                ret.append('<img src="images/cancer-hotspots.svg" title="Hotspot" style="height:11px; width:11px; margin-left:3px"/>');
             }
             if (d.oncokb_oncogenic) {
                 ret.append('<img src="images/oncokb-oncogenic-1.svg" title="'+d.oncokb_oncogenic+'" style="height:11px; width:11px;margin-left:3px"/>');
@@ -260,6 +260,15 @@ export function makeGeneticTrackTooltip(
             caseIdElt = "";
         }
         ret.append(caseIdElt);
+        ret.append(addClonality);
         return ret;
     };
+
+    //Add clonality
+    function addClonality() {
+        var clon = $('<p>');
+        clon.append('<b>Clonality: </b>');
+        return clon;
+    };
+
 }
