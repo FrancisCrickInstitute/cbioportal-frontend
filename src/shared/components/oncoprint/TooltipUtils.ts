@@ -260,7 +260,7 @@ export function makeGeneticTrackTooltip(
             caseIdElt = "";
         }
         ret.append(caseIdElt);
-        ret.append(addClonality("d.clonality"));
+        ret.append(addClonality(d.clonality || ("NA")));
         return ret;
     };
 
@@ -272,3 +272,5 @@ export function makeGeneticTrackTooltip(
     };
 
 }
+
+
