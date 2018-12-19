@@ -260,15 +260,15 @@ export function makeGeneticTrackTooltip(
             caseIdElt = "";
         }
         ret.append(caseIdElt);
-        ret.append(addClonality(d.clonality));
+        // ret.append(addClonality(d.clonality));
         return ret;
     };
 
     //Add clonality
-    function addClonality(clonality : string) {
-        var clon = $('<p>');
-        clon.append('<b>Clonality: '+clonality+'</b>');
-        return clon;
-    };
+    // function addClonality(clonality : string) {
+    //     var clon = $('<p>');
+    //     clon.append('<b>Clonality: '+clonality+'</b>');
+    //     return clon;
+    // };
 
 }
