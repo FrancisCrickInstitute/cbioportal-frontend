@@ -218,7 +218,6 @@ export function makeGeneticTrackData(
             newDatum.patient = patient.patientId;
             newDatum.study_id = patient.studyId;
             newDatum.uid = patient.uniquePatientKey;
-            newDatum.clonality = "patient clonality 2";
 
             const patientSequencingInfo = genePanelInformation.patients[patient.uniquePatientKey];
             if (!patientSequencingInfo.wholeExomeSequenced && !patientSequencingInfo.sequencedGenes.hasOwnProperty(hugoGeneSymbol)) {

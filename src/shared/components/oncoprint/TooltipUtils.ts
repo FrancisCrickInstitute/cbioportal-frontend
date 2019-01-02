@@ -125,7 +125,7 @@ export function makeGeneticTrackTooltip(
             if (d.driver_tiers_filter) {
                 ret.append('<img src="images/driver_tiers.png" title="'+d.driver_tiers_filter+': '+d.driver_tiers_filter_annotation+'" alt="driver tiers filter" style="height:11px; width:11px;margin-left:3px"/>');
             }
-            addClonality(d.clonalStatus || ("NA"))
+            ret.append(addClonality(d.clonalStatus || ("NA")))
             return ret;
         });
     };
@@ -266,7 +266,7 @@ export function makeGeneticTrackTooltip(
 
         // append clonality. if clonality undefined show Not Available
         // ret.append(addClonality("NA"));
-        ret.append(addClonality(d.data[1].clonalStatus || ("NA")));
+        // ret.append(addClonality(d.data[1].clonalStatus || ("NA")));
 
         return ret;
     };
