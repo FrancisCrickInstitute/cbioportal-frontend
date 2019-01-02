@@ -125,6 +125,7 @@ export function makeGeneticTrackTooltip(
             if (d.driver_tiers_filter) {
                 ret.append('<img src="images/driver_tiers.png" title="'+d.driver_tiers_filter+': '+d.driver_tiers_filter_annotation+'" alt="driver tiers filter" style="height:11px; width:11px;margin-left:3px"/>');
             }
+            addClonality(d.clonalStatus || ("NA"))
             return ret;
         });
     };
@@ -158,6 +159,7 @@ export function makeGeneticTrackTooltip(
                     tooltip_datum.driver_filter_annotation = datum.driverFilterAnnotation;
                     tooltip_datum.driver_tiers_filter = datum.driverTiersFilter;
                     tooltip_datum.driver_tiers_filter_annotation = datum.driverTiersFilterAnnotation;
+                    tooltip_datum.clonalStatus = datum.clonalStatus;
                     if (datum.isHotspot) {
                         tooltip_datum.cancer_hotspots_hotspot = true;
                     }
@@ -211,6 +213,7 @@ export function makeGeneticTrackTooltip(
                 }
                 ret.append(mutations[i]);
             }
+
             ret.append('<br>');
         }
         if (cna.length > 0) {
@@ -260,14 +263,18 @@ export function makeGeneticTrackTooltip(
             caseIdElt = "";
         }
         ret.append(caseIdElt);
-        ret.append(addClonality(d.clonality || ("NA")));
+
+        // append clonality. if clonality undefined show Not Available
+        // ret.append(addClonality("NA"));
+        ret.append(addClonality(d.data[1].clonalStatus || ("NA")));
+
         return ret;
     };
 
-    // Add clonality
+    // Add clonality function
     function addClonality(clonality : string) {
         var clon = $('<p>');
-        clon.append('<b>Clonality: '+clonality+'</b>');
+        clon.append('<span>Clonality: </span><span><b> '+clonality+'</b></span>');
         return clon;
     };
 
