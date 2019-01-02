@@ -273,8 +273,8 @@ export function makeGeneticTrackTooltip(
 
     // Add clonality function
     function addClonality(clonality : string) {
-        var clon = $('<p>');
-        clon.append('<span>Clonality: </span><span><b> '+clonality+'</b></span>');
+        var clon = $('<span>');
+        clon.append('<span style="color:'+ (clonality === "C" ? "#3182bd" : "#db2d26") + ';"><b> '+ (clonality === "C" ? "Clonal" : "Subclonal") +'</b></span>');
         return clon;
     };
 
