@@ -264,10 +264,6 @@ export function makeGeneticTrackTooltip(
         }
         ret.append(caseIdElt);
 
-        // append clonality. if clonality undefined show Not Available
-        // ret.append(addClonality("NA"));
-        // ret.append(addClonality(d.data[1].clonalStatus || ("NA")));
-
         return ret;
     };
 
