@@ -189,6 +189,23 @@ export async function fetchClinicalDataForPatient(studyId:string,
     }
 }
 
+export async function fetchPhylogeneticDataForPatient(studyId:string,
+                                                      patientId:string,
+                                                      client:CBioPortalAPI = defaultClient)
+{
+    if (studyId && patientId)
+    {
+        return await client.getPhylogeneticTreesInPatientInStudyUsingGET({
+            projection: 'DETAILED',
+            studyId,
+            patientId
+        });
+    }
+    else {
+        return [];
+    }
+}
+
 export async function fetchCopyNumberSegments(studyId:string,
                                               sampleIds:string[],
                                               client:CBioPortalAPI = defaultClient)

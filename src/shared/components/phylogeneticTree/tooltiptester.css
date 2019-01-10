@@ -1,0 +1,16 @@
+div.tooltipster {
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    height: 15px;
+    line-height: 10px;
+    padding: 0px;
+    font: 10px sans-serif;
+    background: #FFFFFF;
+    border: solid 1px #aaa;
+    border-radius: 3px;
+    pointer-events: none;
+    opacity: 1e-6;
+    vertical-align: middle;
+    display: inline-block;
+}
