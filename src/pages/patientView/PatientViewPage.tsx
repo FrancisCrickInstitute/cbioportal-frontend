@@ -34,6 +34,11 @@ import { getMouseIcon } from './SVGIcons';
 import './patient.scss';
 import IFrameLoader from "../../shared/components/iframeLoader/IFrameLoader";
 
+// Phylogenetic tree requirements
+import PhylogeneticTreeComponent from '../../shared/components/phylogeneticTree/PhylogeneticTreeComponent';
+import { PhylogeneticTreeData } from '../../shared/model/PhylogeneticTreeData';
+import {PhylogeneticTree} from "../../shared/api/generated/CBioPortalAPI";
+
 const patientViewPageStore = new PatientViewPageStore();
 
 (window as any).patientViewPageStore = patientViewPageStore;
@@ -48,6 +53,23 @@ export interface IPatientViewPageProps {
     };
     clinicalDataStatus?: RequestStatus;
 }
+
+// Node colours for phylogenetic tree - this is not a smart way to do it as it does not deal well with non-conformant map indexes
+const nodeColours: {[index: string] : string } = {
+    '1': '#A6CEE3',
+    '2': '#1F78B4',
+    '3': '#B2DF8A',
+    '4': '#33A02C',
+    '5': '#FB9A99',
+    '6': '#E31A1C',
+    '7': '#FDBF6F',
+    '8': '#FF7F00',
+    '9': '#CAB2D6',
+    '10': '#6A3D9A',
+    '11': '#FFFF99',
+    '12': '#B15928'
+}
+
 
 @inject('routing')
 @observer
@@ -168,6 +190,206 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
 
     private shouldShowPathologyReport(patientViewPageStore: PatientViewPageStore): boolean {
         return patientViewPageStore.pathologyReport.isComplete && patientViewPageStore.pathologyReport.result.length > 0;
+    }
+
+    // https://www.npmjs.com/package/react-d3-tree
+    private transformDataToCustom(data: PhylogeneticTreeData) {
+
+        // Early exit
+        if (data === null || typeof data.patient === "undefined" || data.patient === null || data.patient.data === null) {
+            return "";
+        }
+
+        let treeObject: any[] = [];
+        const realData: PhylogeneticTree[] = data.patient.data;
+
+        // Create an ancestor map
+        const ancestorMap = new Map<string, PhylogeneticTree[]>();
+        for (const item of realData) {
+            if (ancestorMap.has(item.ancestorClone)) {
+                const relations: PhylogeneticTree[] = ancestorMap.get(item.ancestorClone);
+                relations.push(item);
+                ancestorMap.set(item.ancestorClone, relations);
+            }
+
+            else {
+                const newArray: PhylogeneticTree[] = [];
+                newArray.push(item);
+                ancestorMap.set(item.ancestorClone, newArray);
+            }
+        }
+
+        // Find our root object
+        let identifiedItem = null;
+        let ancestorId: string;
+        for (const interrogatedItem of realData) {
+            ancestorId = interrogatedItem.ancestorClone;
+
+            // Find if something exists with this as decendant
+            let check = false;
+            for (const comparisonItem of realData) {
+                if (comparisonItem.descendantClone === ancestorId) {
+                    check = true;
+                    break;
+                }
+            }
+
+            // Handle whether this interrogated item has an ancestor
+            if (!check) {
+                if (identifiedItem !== null && interrogatedItem.ancestorClone !== identifiedItem) {
+                    return [{name: "Poorly Defined Tree"}];
+                }
+
+                identifiedItem = interrogatedItem.ancestorClone;
+            }
+        }
+
+        if (identifiedItem === null) {
+            return "";
+        }
+
+        // Build our object
+        treeObject = this.walkTreeAsObject(ancestorMap, identifiedItem, treeObject);
+        return treeObject;
+        // return "((raccoon:19.19959,bear:6.80041):0.84600,((sea_lion:11.99700, seal:12.00300):7.52973,((monkey:100.85930,cat:47.14069):20.59201, weasel:18.87953):2.09460):3.87382,dog:25.46154);";
+
+
+        // const myTreeData = [
+        //     {
+        //         name: 'Top Level',
+        //         attributes: {
+        //             keyA: 'val A',
+        //             keyB: 'val B',
+        //             keyC: 'val C',
+        //         },
+        //         children: [
+        //             {
+        //                 name: 'Level 2: A',
+        //                 attributes: {
+        //                     keyA: 'val A',
+        //                     keyB: 'val B',
+        //                     keyC: 'val C',
+        //                 },
+        //             },
+        //             {
+        //                 name: 'Level 2: B',
+        //             },
+        //         ],
+        //     },
+        // ];
+        //
+        // return myTreeData;
+    }
+
+    private walkTreeAsObject(ancestorMap: Map<string, PhylogeneticTree[]>, currentParent: string, treeObject: any[]) {
+        const size = 20;
+
+        // Add current node data
+        const node:any = {
+            name: currentParent,
+            data: "blah",
+            nodeSvgShape: {
+                shapeProps: {
+                    fill: nodeColours[currentParent] || 'white',
+                    r: 10,
+                }
+            }
+        };
+
+        if (ancestorMap.has(currentParent)) {
+            const children: PhylogeneticTree[] = ancestorMap.get(currentParent);
+            if (children.length > 0) {
+                let childArray: any[] = [];
+                for (let i = 0; i < children.length; i++) {
+                    childArray = this.walkTreeAsObject(ancestorMap, children[i].descendantClone, childArray);
+                }
+                node.children = childArray;
+            }
+        }
+
+        treeObject.push(node);
+        return treeObject;
+    }
+
+    private transformDataToNewick(data: PhylogeneticTreeData): string {
+
+        // Early exit
+        if (data === null || typeof data.patient === "undefined" || data.patient === null || data.patient.data === null) {
+            return "";
+        }
+
+        let newick: string = "";
+        const realData: PhylogeneticTree[] = data.patient.data;
+
+        // Create an ancestor map
+        const ancestorMap = new Map<string, PhylogeneticTree[]>();
+        for (const item of realData) {
+            if (ancestorMap.has(item.ancestorClone)) {
+                const relations: PhylogeneticTree[] = ancestorMap.get(item.ancestorClone);
+                relations.push(item);
+                ancestorMap.set(item.ancestorClone, relations);
+            }
+
+            else {
+                const newArray: PhylogeneticTree[] = [];
+                newArray.push(item);
+                ancestorMap.set(item.ancestorClone, newArray);
+            }
+        }
+
+        // Find our root object
+        let identifiedItem = null;
+        let ancestorId: string;
+        for (const interrogatedItem of realData) {
+            ancestorId = interrogatedItem.ancestorClone;
+
+            // Find if something exists with this as decendant
+            let check = false;
+            for (const comparisonItem of realData) {
+                if (comparisonItem.descendantClone === ancestorId) {
+                    check = true;
+                    break;
+                }
+            }
+
+            // Handle whether this interrogated item has an ancestor
+            if (!check) {
+                if (identifiedItem !== null && interrogatedItem.ancestorClone !== identifiedItem) {
+                    return "(((((identified)roots)multiple)data)generated)Poorly";
+                }
+
+                identifiedItem = interrogatedItem.ancestorClone;
+            }
+        }
+
+        if (identifiedItem === null) {
+            return "";
+        }
+
+        // Build our string
+        newick = this.walkTree(ancestorMap, identifiedItem, newick);
+        newick = newick.split('').reverse().join('')+ ";";
+        return newick;
+        // return "((raccoon:19.19959,bear:6.80041):0.84600,((sea_lion:11.99700, seal:12.00300):7.52973,((monkey:100.85930,cat:47.14069):20.59201, weasel:18.87953):2.09460):3.87382,dog:25.46154);";
+    }
+
+    private walkTree(ancestorMap: Map<string, PhylogeneticTree[]>, currentParent: string, newick: string) : string {
+        newick += "0.1:" + currentParent; // reversed distance declaration for string reversal
+        if (!ancestorMap.has(currentParent)) {
+            return newick;
+        }
+
+        newick += ")"; // note parenthesis are invertes so when we reverse the string later they become correct
+        const children: PhylogeneticTree[] = ancestorMap.get(currentParent);
+        for (let i = 0; i < children.length; i++) {
+            newick = this.walkTree(ancestorMap, children[i].descendantClone, newick);
+            if (i !== children.length - 1) {
+                newick += ",";
+            }
+        }
+        newick += "("; // note parenthesis are invertes so when we reverse the string later they become correct
+
+        return newick;
     }
 
     public render() {
@@ -464,6 +686,13 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
                             <IFrameLoader height={700} url={  `http://cancer.digitalslidearchive.net/index_mskcc.php?slide_name=${patientViewPageStore.patientId}` } />
                         </div>
                     </MSKTab>
+
+                        <MSKTab key={4} id="phylogeneticTreeReportTab" linkText="Phylogenetic Tree"
+                                hide={(!patientViewPageStore.phylogeneticTreeData.isComplete || !patientViewPageStore.oncoKbAnnotatedGenes.isComplete || !patientViewPageStore.mutationData.isComplete || !patientViewPageStore.uncalledMutationData.isComplete)}
+                                loading={patientViewPageStore.phylogeneticTreeData.isPending || patientViewPageStore.mutationData.isPending || patientViewPageStore.uncalledMutationData.isPending || patientViewPageStore.oncoKbAnnotatedGenes.isPending}>
+                            {/*<Phylocanvas className="Phylogenetic Tree" data={this.transformDataToNewick(patientViewPageStore.phylogeneticTreeData.result)} treeType={"diagonal"} />*/}
+                            <PhylogeneticTreeComponent data={this.transformDataToCustom(patientViewPageStore.phylogeneticTreeData.result)} tooltips={false} />
+                        </MSKTab>
 
                     </MSKTabs>
 

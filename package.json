@@ -215,7 +215,8 @@
     "webpack": "^3.10.0",
     "webpack-fail-plugin": "^1.0.5",
     "webpack-raphael": "^2.1.4",
-    "word-wrap": "^1.2.3"
+    "word-wrap": "^1.2.3",
+    "react-d3-tree": "git+https://github.com/JonathanCSmith/react-d3-tree.git#d4389c39d8056fa09117d58184c2fb3f51e3f6a5"
   },
   "devDependencies": {
     "argparse": "^1.0.9",
