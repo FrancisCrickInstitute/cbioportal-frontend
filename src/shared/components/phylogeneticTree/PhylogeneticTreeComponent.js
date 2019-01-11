@@ -26,7 +26,6 @@ export default class PhylogeneticTreeComponent extends React.PureComponent {
         return (
             <div id="treeWrapper" style={{height: '50em'}} ref={tc => (this.treeContainer = tc)}>
 
-
                 <div className="tooltipster"/>
 
                 <Tree

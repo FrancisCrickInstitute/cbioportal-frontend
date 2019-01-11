@@ -691,7 +691,7 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
                                 hide={(!patientViewPageStore.phylogeneticTreeData.isComplete || !patientViewPageStore.oncoKbAnnotatedGenes.isComplete || !patientViewPageStore.mutationData.isComplete || !patientViewPageStore.uncalledMutationData.isComplete)}
                                 loading={patientViewPageStore.phylogeneticTreeData.isPending || patientViewPageStore.mutationData.isPending || patientViewPageStore.uncalledMutationData.isPending || patientViewPageStore.oncoKbAnnotatedGenes.isPending}>
                             {/*<Phylocanvas className="Phylogenetic Tree" data={this.transformDataToNewick(patientViewPageStore.phylogeneticTreeData.result)} treeType={"diagonal"} />*/}
-                            <PhylogeneticTreeComponent data={this.transformDataToCustom(patientViewPageStore.phylogeneticTreeData.result} tooltips={false} />
+                            <PhylogeneticTreeComponent data={this.transformDataToCustom(patientViewPageStore.phylogeneticTreeData.result)} tooltips={false} />
                         </MSKTab>
 
                     </MSKTabs>
