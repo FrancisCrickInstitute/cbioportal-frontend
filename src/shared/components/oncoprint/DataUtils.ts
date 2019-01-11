@@ -192,6 +192,7 @@ export function makeGeneticTrackData(
             newDatum.sample = sample.sampleId;
             newDatum.study_id = sample.studyId;
             newDatum.uid = sample.uniqueSampleKey;
+            newDatum.clonality = "sample clonality";
 
             const sampleSequencingInfo = genePanelInformation.samples[sample.uniqueSampleKey];
             if (!sampleSequencingInfo.wholeExomeSequenced && !sampleSequencingInfo.sequencedGenes.hasOwnProperty(hugoGeneSymbol)) {

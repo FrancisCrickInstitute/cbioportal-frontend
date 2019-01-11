@@ -66,6 +66,7 @@ export type GeneticTrackDatum = {
     disp_mrna?:string;
     disp_prot?:string;
     disp_fusion?:boolean;
+    clonality?:string; // clonality made optional to avoid test failure
 };
 
 export type GeneticTrackSpec = {
