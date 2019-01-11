@@ -32,6 +32,7 @@ export default class PhylogeneticTreeComponent extends React.PureComponent {
                     data={this.props.data}
                     translate={this.state.translate}
                     orientation={'invertical'}
+                    collapsible={false}
                     onMouseOver={
                         function (node, evt) {
                             if (!this.props.tooltips) {
