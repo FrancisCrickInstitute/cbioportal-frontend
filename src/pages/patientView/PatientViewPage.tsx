@@ -193,10 +193,9 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
     }
 
     // https://www.npmjs.com/package/react-d3-tree
-    private transformDataToCustom(data: PhylogeneticTreeData) {
-
+    private transformDataToCustom(data: PhylogeneticTreeData | undefined) {
         // Early exit
-        if (data === null || typeof data.patient === "undefined" || data.patient === null || data.patient.data === null) {
+        if (data === null || data === undefined || typeof data.patient === "undefined" || data.patient === null || data.patient.data === null) {
             return "";
         }
 

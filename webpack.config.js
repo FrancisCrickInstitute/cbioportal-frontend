@@ -44,7 +44,7 @@ const join = path.join;
 const resolve = path.resolve;
 
 const isDev = NODE_ENV === 'development';
-const isTest = NODE_ENV === 'test' || NODE_ENV === 'development';
+const isTest = NODE_ENV === 'test';
 
 // devServer config
 const devHost = process.env.HOST || 'localhost';
@@ -272,16 +272,15 @@ var config = {
     devServer: {
         contentBase: './dist',
         hot: true,
-        historyApiFallback: false,
-        noInfo: false,
-        quiet: false,
-        lazy: false,
-        publicPath: '/',
-        https: false,
-        host:' localhost',
+        historyApiFallback:false,
+        noInfo:false,
+        quiet:false,
+        lazy:false,
+        publicPath:'/',
+        https:false,
+        host:'localhost',
         headers: {"Access-Control-Allow-Origin": "*"},
-        stats:'errors-only',
-        port: 3000
+        stats:'errors-only'
     },
 
 
@@ -338,6 +337,23 @@ config.module.rules.push(
     }
 );
 
+if (isDev) {
+    // add for testwriter
+    config.module.rules.push(
+        {
+            test: /\.ts|tsx/,
+            use:[{loader: 'testwriter'}]
+        }
+    );
+    config.entry.push(`${path.join(src, 'testWriter.js')}`);
+
+    config.plugins.push(
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin()
+    );
+
+}
+
 if (isTest) {
 
     config.devtool = 'source-map';
@@ -392,7 +408,7 @@ if (isTest) {
     );
 
     config.devServer.port = devPort;
-    config.devServer.host = devHost;
+    //config.devServer.hostname = devHost;
 
     // force hot module reloader to hit absolute path so it can load
     // from dev server
@@ -467,26 +483,6 @@ if (isTest) {
         })
     );
 
-}
-
-if (isDev) {
-    // add for testwriter
-    config.module.rules.push(
-        {
-            test: /\.ts|tsx/,
-            use:[{loader: 'testwriter'}]
-        }
-    );
-    config.entry.push(`${path.join(src, 'testWriter.js')}`);
-
-    config.plugins.push(
-        new webpack.NamedModulesPlugin(),
-        new webpack.NamedChunksPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("development") })
-    );
-
-    config.devtool = 'inline-source-map';
 }
 
 //config.entry.push('bootstrap-loader');

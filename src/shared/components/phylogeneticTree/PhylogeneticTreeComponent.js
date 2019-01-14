@@ -4,14 +4,8 @@ import Tree from 'react-d3-tree';
 import * as d3 from 'd3';
 import './tooltiptester.css';
 
-export default class PhylogeneticTreeComponent extends React.PureComponent {
-    static propTypes = {
-        data: PropTypes.string,
-        tooltips: PropTypes.bool,
-    };
-
-    state = {};
-
+/** @augments {React.Component<object, object>} */
+export default class PhylogeneticTreeComponent extends React.Component {
     componentDidMount() {
         const dimensions = this.treeContainer.getBoundingClientRect();
         this.setState({
@@ -24,45 +18,45 @@ export default class PhylogeneticTreeComponent extends React.PureComponent {
 
     render() {
         return (
-            <div id="treeWrapper" style={{height: '50em'}} ref={tc => (this.treeContainer = tc)}>
+            <div id="treeWrapper" style={{ height: '50em' }} ref={tc => (this.treeContainer = tc)}>
 
-                <div className="tooltipster"/>
+                <div className="tooltipster" />
 
                 <Tree
-                    data={this.props.data}
-                    translate={this.state.translate}
-                    orientation={'invertical'}
-                    collapsible={false}
-                    onMouseOver={
+                  data={this.props.data}
+                  translate={this.state.translate}
+                  orientation={'invertical'}
+                  collapsible={false}
+                  onMouseOver={
                         function (node, evt) {
                             if (!this.props.tooltips) {
                                 return;
                             }
 
-                            const tooltip = d3.select("div.tooltipster");
-                            tooltip.transition().duration(300).style("opacity", 1);
+                            const tooltip = d3.select('div.tooltipster');
+                            tooltip.transition().duration(300).style('opacity', 1);
 
                             // Positioning
-                            tooltip.style("left", Math.max(0, evt.pageX) + "px").style("top", (evt.pageY) + "px");
+                            tooltip.style('left', `${Math.max(0, evt.pageX)}px`).style('top', `${evt.pageY}px`);
 
                             // Content
-                            tooltip.html("<b>Info about: " + node.data + "</b>");
+                            tooltip.html(`<b>Info about: ${node.data}</b>`);
 
                             // if (!tooltip.classed("visitip")) {
                             //     tooltip.classed("visitip", true);
                             // }
                         }
                     }
-                    onMouseOut={
-                        function(node, evt) {
+                  onMouseOut={
+                        function (node, evt) {
                             if (!this.props.tooltips) {
                                 return;
                             }
 
-                            const tooltip = d3.select("div.tooltipster");
+                            const tooltip = d3.select('div.tooltipster');
                             // tooltip.classed("visitip", false);
-                            tooltip.transition().duration(300).style("opacity", 1e-6);
-;                        }
+                            tooltip.transition().duration(300).style('opacity', 1e-6);
+                        }
                     }
                 />
 
@@ -70,3 +64,13 @@ export default class PhylogeneticTreeComponent extends React.PureComponent {
         );
     }
 }
+
+PhylogeneticTreeComponent.propTypes = {
+    data: PropTypes.string,
+    tooltips: PropTypes.bool,
+};
+
+PhylogeneticTreeComponent.defaultProps = {
+    data: '',
+    tooltips: false,
+};
