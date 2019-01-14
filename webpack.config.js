@@ -62,13 +62,13 @@ const imgPath = 'reactapp/images/[hash].[ext]';
 var routeComponentRegex = /routes\/([^\/]+\/?[^\/]+).js$/;
 
 var sassResourcesLoader =  {
-loader:'sass-resources-loader',
+    loader:'sass-resources-loader',
     options: {
-    resources:[
-        path.resolve(__dirname, 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss'),
-        path.resolve(__dirname, 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_mixins'),
-        './src/globalStyles/variables.scss'
-    ]
+        resources:[
+            path.resolve(__dirname, 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss'),
+            path.resolve(__dirname, 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_mixins'),
+            './src/globalStyles/variables.scss'
+        ]
     }
 };
 
@@ -82,8 +82,8 @@ var config = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'reactapp/[name].app.js',
         chunkFilename: 'reactapp/[name].[chunkhash].chunk.js',
-       // cssFilename: 'reactapp/app.css',
-       // hash: false,
+        // cssFilename: 'reactapp/app.css',
+        // hash: false,
         publicPath: '/',
     },
 
@@ -118,7 +118,7 @@ var config = {
 
     plugins: [
         new webpack.DefinePlugin({
-            'VERSION': version, 
+            'VERSION': version,
             'COMMIT': commit,
             'ENV_CBIOPORTAL_URL': process.env.CBIOPORTAL_URL? JSON.stringify(cleanUrl(process.env.CBIOPORTAL_URL)) : '"unknown"',
             'ENV_GENOME_NEXUS_URL': process.env.GENOME_NEXUS_URL? JSON.stringify(cleanUrl(process.env.GENOME_NEXUS_URL)) : '"unkown"',
@@ -228,13 +228,13 @@ var config = {
             {
                 test: /\.swf$/,
                 use: [
-                        {
-                            loader: `file-loader`,
-                            options:{
-                                name:imgPath
-                            }
+                    {
+                        loader: `file-loader`,
+                        options:{
+                            name:imgPath
                         }
-                    ],
+                    }
+                ],
             },
             {
                 test: /\.pdf$/,
@@ -246,13 +246,13 @@ var config = {
                             limit:1
                         }
                     }
-                    ],
+                ],
             },
             {
                 test: /lodash/,
                 use: [
                     {loader: 'imports-loader?define=>false'}
-                    ]
+                ]
             },
 
             {
