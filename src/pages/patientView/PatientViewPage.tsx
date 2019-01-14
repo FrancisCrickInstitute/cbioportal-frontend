@@ -207,16 +207,17 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
         const ancestorMap = new Map<string, PhylogeneticTree[]>();
         for (const item of realData) {
             if (ancestorMap.has(item.ancestorClone)) {
-                const relations: PhylogeneticTree[] = ancestorMap.get(item.ancestorClone);
-                relations.push(item);
-                ancestorMap.set(item.ancestorClone, relations);
+                const relations: PhylogeneticTree[] | undefined = ancestorMap.get(item.ancestorClone);
+                if (relations !== undefined) {
+                    relations.push(item);
+                    ancestorMap.set(item.ancestorClone, relations);
+                    continue;
+                }
             }
 
-            else {
-                const newArray: PhylogeneticTree[] = [];
-                newArray.push(item);
-                ancestorMap.set(item.ancestorClone, newArray);
-            }
+            const newArray: PhylogeneticTree[] = [];
+            newArray.push(item);
+            ancestorMap.set(item.ancestorClone, newArray);
         }
 
         // Find our root object
@@ -297,8 +298,8 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
         };
 
         if (ancestorMap.has(currentParent)) {
-            const children: PhylogeneticTree[] = ancestorMap.get(currentParent);
-            if (children.length > 0) {
+            const children: PhylogeneticTree[] | undefined = ancestorMap.get(currentParent);
+            if (children !== undefined && children.length > 0) {
                 let childArray: any[] = [];
                 for (let i = 0; i < children.length; i++) {
                     childArray = this.walkTreeAsObject(ancestorMap, children[i].descendantClone, childArray);
@@ -325,16 +326,18 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
         const ancestorMap = new Map<string, PhylogeneticTree[]>();
         for (const item of realData) {
             if (ancestorMap.has(item.ancestorClone)) {
-                const relations: PhylogeneticTree[] = ancestorMap.get(item.ancestorClone);
-                relations.push(item);
-                ancestorMap.set(item.ancestorClone, relations);
+                const relations: PhylogeneticTree[] | undefined = ancestorMap.get(item.ancestorClone);
+                if (relations !== undefined) {
+                    relations.push(item);
+                    ancestorMap.set(item.ancestorClone, relations);
+                    continue;
+                }
             }
 
-            else {
-                const newArray: PhylogeneticTree[] = [];
-                newArray.push(item);
-                ancestorMap.set(item.ancestorClone, newArray);
-            }
+
+            const newArray: PhylogeneticTree[] = [];
+            newArray.push(item);
+            ancestorMap.set(item.ancestorClone, newArray);
         }
 
         // Find our root object
@@ -380,7 +383,11 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
         }
 
         newick += ")"; // note parenthesis are invertes so when we reverse the string later they become correct
-        const children: PhylogeneticTree[] = ancestorMap.get(currentParent);
+        const children: PhylogeneticTree[] | undefined = ancestorMap.get(currentParent);
+        if (children === undefined) {
+            return newick;
+        }
+
         for (let i = 0; i < children.length; i++) {
             newick = this.walkTree(ancestorMap, children[i].descendantClone, newick);
             if (i !== children.length - 1) {

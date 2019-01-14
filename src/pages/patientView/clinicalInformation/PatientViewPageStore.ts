@@ -629,7 +629,7 @@ export class PatientViewPageStore {
             this.phylogeneticTreeDataPatient.result
         )
 
-    },                                         []);
+    },                                         undefined);
     
     @computed get sampleIds(): string[]
     {
