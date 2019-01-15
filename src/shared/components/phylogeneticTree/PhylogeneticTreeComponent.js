@@ -6,6 +6,13 @@ import './tooltiptester.css';
 
 /** @augments {React.Component<object, object>} */
 export default class PhylogeneticTreeComponent extends React.Component {
+    state = {
+        translate: {
+            x: 0,
+            y: 0
+        }
+    };
+
     componentDidMount() {
         const dimensions = this.treeContainer.getBoundingClientRect();
         this.setState({
@@ -18,7 +25,8 @@ export default class PhylogeneticTreeComponent extends React.Component {
 
     render() {
         return (
-            <div id="treeWrapper" style={{ height: '50em' }} ref={tc => (this.treeContainer = tc)}>
+
+            <div className="treeWrapper" style={{ height: '50em' }} ref={(ref) => { this.treeContainer = ref; }}>
 
                 <div className="tooltipster" />
 
