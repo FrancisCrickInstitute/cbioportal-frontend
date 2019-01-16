@@ -675,7 +675,6 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
                         </div>
                     </MSKTab>
 
-
                     <MSKTab key={4} id="heatMapReportTab" linkText="Heatmap"
                              hide={(patientViewPageStore.MDAndersonHeatMapAvailable.isComplete && !patientViewPageStore.MDAndersonHeatMapAvailable.result)}
                             loading={patientViewPageStore.MDAndersonHeatMapAvailable.isPending}
@@ -693,12 +692,12 @@ export default class PatientViewPage extends React.Component<IPatientViewPagePro
                         </div>
                     </MSKTab>
 
-                        <MSKTab key={4} id="phylogeneticTreeReportTab" linkText="Phylogenetic Tree"
-                                hide={(!patientViewPageStore.phylogeneticTreeData.isComplete || !patientViewPageStore.oncoKbAnnotatedGenes.isComplete || !patientViewPageStore.mutationData.isComplete || !patientViewPageStore.uncalledMutationData.isComplete)}
-                                loading={patientViewPageStore.phylogeneticTreeData.isPending || patientViewPageStore.mutationData.isPending || patientViewPageStore.uncalledMutationData.isPending || patientViewPageStore.oncoKbAnnotatedGenes.isPending}>
-                            {/*<Phylocanvas className="Phylogenetic Tree" data={this.transformDataToNewick(patientViewPageStore.phylogeneticTreeData.result)} treeType={"diagonal"} />*/}
-                            <PhylogeneticTreeComponent data={this.transformDataToCustom(patientViewPageStore.phylogeneticTreeData.result)} tooltips={false} />
-                        </MSKTab>
+                    <MSKTab key={6} id="phylogeneticTreeReportTab" linkText="Phylogenetic Tree"
+                            hide={(!patientViewPageStore.phylogeneticTreeData.isComplete || !patientViewPageStore.oncoKbAnnotatedGenes.isComplete || !patientViewPageStore.mutationData.isComplete || !patientViewPageStore.uncalledMutationData.isComplete)}
+                            loading={patientViewPageStore.phylogeneticTreeData.isPending || patientViewPageStore.mutationData.isPending || patientViewPageStore.uncalledMutationData.isPending || patientViewPageStore.oncoKbAnnotatedGenes.isPending}>
+                        {/*<Phylocanvas className="Phylogenetic Tree" data={this.transformDataToNewick(patientViewPageStore.phylogeneticTreeData.result)} treeType={"diagonal"} />*/}
+                        <PhylogeneticTreeComponent data={this.transformDataToCustom(patientViewPageStore.phylogeneticTreeData.result)} tooltips={false} />
+                    </MSKTab>
 
                     </MSKTabs>
 
