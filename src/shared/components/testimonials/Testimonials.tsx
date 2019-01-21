@@ -23,23 +23,10 @@ export class TestimonialStore {
         this.testimonialIndex = 0;
         this.testimonials = [
             {
-                cite: 'Paul Nurse, Director of Francis Crick Institute',
-                quote: `Gareth and Rachel definitely deserve substantial raises.`
+                cite: '',
+                quote: ``
             },
-            {
-                cite: 'Swanton wet-lab scientists',
-                quote: `Wow, we don't even need bioinformaticians anymore!`
-            },
-            {
-                cite: 'cBioPortal NYC Lead',
-                quote: `Gareth and Rachel have demonstrated remarkable perseverance in the face of their own extreme ignorance. 
-                        Within just a couple of weeks they were able to create a button`
-            },
-            {
-                cite: 'Head of Recruitment, Astra Zeneca',
-                quote: `With this project Rachel has been able to demonstrate 
-                        her vast set of transferable skills. She’s a keeper!`
-            },
+
         ];
         setInterval(() => this.incrementIndex(), 15000);
     }
