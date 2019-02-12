@@ -13,7 +13,7 @@
     "buildBootstrap": "sass --style :compressed src/globalStyles/bootstrap-entry.scss src/globalStyles/prefixed-bootstrap.min.css",
     "heroku-postbuild": "npm run build && npm install http-server -g",
     "updateAPI": "npm run fetchAPI && npm run buildAPI && npm run updateOncoKbAPI && npm run updateGenomeNexusAPI",
-    "fetchAPI": "curl http://galapagos-tracerx.thecrick.test/galapagos/api/api-docs | json | grep -v basePath | grep -v termsOfService | grep -v host > src/shared/api/generated/CBioPortalAPI-docs.json && curl http://galapagos-tracerx.thecrick.test/galapagos/api/api-docs?group=internal | json | grep -v host | grep -v basePath | grep -v termsOfService > src/shared/api/generated/CBioPortalAPIInternal-docs.json",
+    "fetchAPI": "curl http://galapagos-tracerx.crick.ac.uk/galapagos/api/api-docs | json | grep -v basePath | grep -v termsOfService | grep -v host > src/shared/api/generated/CBioPortalAPI-docs.json && curl http://galapagos-tracerx.crick.ac.uk/galapagos/api/api-docs?group=internal | json | grep -v host | grep -v basePath | grep -v termsOfService > src/shared/api/generated/CBioPortalAPIInternal-docs.json",
     "buildAPI": "node scripts/generate-api.js src/shared/api/generated CBioPortalAPI CBioPortalAPIInternal",
     "updateOncoKbAPI": "npm run fetchOncoKbAPI && npm run buildOncoKbAPI",
     "fetchOncoKbAPI": "curl http://oncokb.org/api/v1/v2/api-docs | json > src/shared/api/generated/OncoKbAPI-docs.json",
